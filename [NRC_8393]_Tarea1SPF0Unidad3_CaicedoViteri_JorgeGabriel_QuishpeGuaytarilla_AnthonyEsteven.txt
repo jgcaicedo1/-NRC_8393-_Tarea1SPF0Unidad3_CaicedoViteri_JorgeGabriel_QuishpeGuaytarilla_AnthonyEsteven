@@ -1,0 +1,585 @@
+--------TB PERSONA--------------
+-----------INSERTAR------------
+--INT_INDEX_PERSONA
+--STR_ID_PERSONA
+--STR_NOMBRE_PERSONA
+--STR_APELLIDO_PERSONA
+--STR_FECHA_NACIMIENTO_PERSONA
+create or replace procedure "sp_CrearPersona" (int_index_persona in number,str_id_persona in varchar2, 
+str_nombre_persona in varchar2, str_apellido_persona in varchar2,str_fecha_nacimiento_persona in varchar2)
+AS
+Begin
+    INSERT INTO TB_PERSONA(INT_INDEX_PERSONA,STR_ID_PERSONA,STR_NOMBRE_PERSONA,STR_APELLIDO_PERSONA,STR_FECHA_NACIMIENTO_PERSONA) 
+VALUES(int_index_persona,str_id_persona, 
+str_nombre_persona, str_apellido_persona,str_fecha_nacimiento_persona);
+End;
+/
+exec "sp_CrearPersona" (1,'1725497190','Gabriel','Caicedo','26-09-2000');
+exec "sp_CrearPersona" (2,'1734454135','Anthony','Quishpe','10-01-2020');
+
+
+COLUMN int_index_persona FORMAT 999999
+COLUMN str_id_persona FORMAT A10
+COLUMN str_nombre_persona FORMAT A10
+COLUMN str_apellido_persona FORMAT A10
+COLUMN str_fecha_nacimiento_persona FORMAT A10
+
+-------DELETE------------
+--INT_INDEX_PERSONA
+CREATE OR REPLACE PROCEDURE "sp_BorrarPersona" (int_index_persona in number)
+AS
+BEGIN
+    DELETE FROM TB_PERSONA WHERE INT_INDEX_PERSONA = int_index_persona;
+END;
+/
+set autoprint on;
+exec "sp_BorrarPersona" (1);
+--------TB DOCENTE--------------
+-----------INSERTAR------------
+--INT_INDEX_PERSONA
+--STR_TITULO_PERSONA
+create or replace procedure "sp_CrearDocente" (int_index_persona in number,str_titulo_docente in varchar2)
+AS
+Begin
+    INSERT INTO TB_DOCENTE(INT_INDEX_PERSONA,STR_TITULO_DOCENTE) 
+VALUES(int_index_persona,str_titulo_docente);
+End;
+/
+exec "sp_CrearDocente" (1,'Ingeniero');
+
+COLUMN str_titulo_docente FORMAT A10
+
+---------------------Actualizar-------------------------
+--INT_INDEX_PERSONA
+--STR_TITULO_PERSONA
+CREATE OR REPLACE PROCEDURE "sp_ActualizarDocente" (int_index_persona in number,str_titulo in varchar2)
+AS
+Begin
+    UPDATE TB_DOCENTE
+    SET 
+    STR_TITULO_DOCENTE = str_titulo 
+    WHERE INT_INDEX_PERSONA = int_index_persona;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarDocente" (1,'Doctor');
+
+-------DELETE------------
+--INT_INDEX_PERSONA
+CREATE OR REPLACE PROCEDURE "sp_BorrarDocente" (int_index_persona in number)
+AS
+BEGIN
+    DELETE FROM TB_DOCENTE WHERE INT_INDEX_PERSONA = int_index_persona;
+END;
+/
+set autoprint on;
+exec "sp_BorrarDocente" (1);
+
+--------TB ESTUDIANTE--------------
+-----------INSERTAR------------
+--INT_INDEX_PERSONA
+--STR_FOTO_ESTUDIANTE
+create or replace procedure "sp_CrearEstudiante" (int_index_persona in number,str_foto_estudiante in varchar2)
+AS
+Begin
+    INSERT INTO TB_ESTUDIANTE(INT_INDEX_PERSONA,STR_FOTO_ESTUDIANTE) 
+VALUES(int_index_persona,str_foto_estudiante);
+End;
+/
+exec "sp_CrearEstudiante" (1,'Gabriel1roBasico.png');
+exec "sp_CrearEstudiante" (2,'Anthony1roBasica.png');
+
+COLUMN str_foto_estudiante FORMAT A30
+
+---------------------Actualizar-------------------------
+--INT_INDEX_PERSONA
+--STR_FOTO_ESTUDIANTE
+CREATE OR REPLACE PROCEDURE "sp_ActualizarEstudiante" (int_index_persona in number,str_foto in varchar2)
+AS
+Begin
+    UPDATE TB_ESTUDIANTE
+    SET 
+    STR_FOTO_ESTUDIANTE = str_foto 
+    WHERE INT_INDEX_PERSONA = int_index_persona;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarEstudiante" (1,'Gabriel8voBasica.png');
+
+-------DELETE------------
+--INT_INDEX_PERSONA
+CREATE OR REPLACE PROCEDURE "sp_BorrarEstudiante" (int_index_persona in number)
+AS
+BEGIN
+    DELETE FROM TB_ESTUDIANTE WHERE INT_INDEX_PERSONA = int_index_persona;
+END;
+/
+set autoprint on;
+exec "sp_BorrarEstudiante" (1);
+
+--------TB REPRESENTANTE ESTUDIANTE--------------
+-----------INSERTAR------------
+--INT_INDEX_PERSONA_ESTUDIANTE
+--INT_INDEX_PERSONA_REPRESENTANTE
+create or replace procedure "sp_CrearRepresentante" (int_index_persona_estudiante in NUMBER,int_index_persona_representante in NUMBER,str_parentesco in VARCHAR2)
+AS
+Begin
+    INSERT INTO TB_REPRESENTANTE_ESTUDIANTE(INT_INDEX_PERSONA_ESTUDIANTE,INT_INDEX_PERSONA_REPRESENTANTE,STR_PARENTESCO) 
+VALUES(int_index_persona_estudiante,int_index_persona_representante,str_parentesco);
+End;
+/
+exec "sp_CrearRepresentante" (2,1,'Padre');
+COLUMN int_index_persona_estudiante FORMAT 999999
+COLUMN int_index_persona_representante FORMAT 999999
+COLUMN str_parentesco FORMAT A7
+-------DELETE------------
+--INT_INDEX_PERSONA_ESTUDIANTE
+--INT_INDEX_PERSONA_REPRESENTANTE
+CREATE OR REPLACE PROCEDURE "sp_BorrarRepresentante" (int_index_persona_estudiante in NUMBER,int_index_persona_representante in NUMBER)
+AS
+BEGIN
+    DELETE FROM TB_REPRESENTANTE_ESTUDIANTE
+    WHERE INT_INDEX_PERSONA_ESTUDIANTE = int_index_persona_estudiante 
+    AND INT_INDEX_PERSONA_REPRESENTANTE = int_index_persona_representante;
+END;
+/
+set autoprint on;
+exec "sp_BorrarRepresentante" (2,1);
+
+
+
+----------TB_ANIO ESCOLAR-----------------------
+-------CREAR ANIO ESCOLAR---------------------------
+create or replace procedure "sp_CrearAnio" (str_id_anio in varchar2, str_nombre_anio in varchar2, str_estado_anio in varchar2)
+AS
+Begin
+    INSERT INTO "TB_ANIO_ESCOLAR" VALUES(str_id_anio, str_nombre_anio, str_estado_anio);
+End;
+/
+exec "sp_CrearAnio" ('A2022','Ejemplo','Activo');
+
+COLUMN str_id_anio FORMAT A20
+COLUMN str_nombre_anio FORMAT A20
+COLUMN str_estado_anio FORMAT A10
+---------------------Actulizar ANIO ESCOLAR-------------------------
+--STR_ID_ANIO
+--STR_NOMBRE_ANIO
+--STR_ESTADO_ANIO
+CREATE OR REPLACE PROCEDURE "sp_ActualizarAnio" (VarIdAnio in varchar2, VarNombreAnio in varchar2, VarEstadoAnio in varchar2)
+AS
+BEGIN
+    UPDATE TB_ANIO_ESCOLAR
+    SET 
+    str_nombre_anio = VarNombreAnio, 
+    str_estado_anio = VarEstadoAnio
+    WHERE str_id_anio = VarIdAnio;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarAnio" ('A2022','Ejemplo','Inactivo');
+----------------------------------------
+------------------TB_NIVEL--------------
+----------------CREAR NIVEL-------------------
+create or replace procedure "sp_CrearNivel" (str_id_nivel in varchar2, str_nombre_nivel in varchar2)
+AS
+Begin
+    INSERT INTO "TB_NIVEL" VALUES(str_id_nivel, str_nombre_nivel);
+End;
+/
+exec "sp_CrearNivel" ('Niv004','Nivel 3');
+
+COLUMN str_id_nivel FORMAT A20
+COLUMN str_nombre_nivel FORMAT A20
+---------ACTUALIZAR NIVEL------------------
+--STR_ID_NIVEL
+--STR_NOMBRE_NIVEL
+CREATE OR REPLACE PROCEDURE "sp_ActualizarNivel" (VarIdNivel IN VARCHAR2, VarNombreNivel IN VARCHAR2)
+AS
+BEGIN
+    UPDATE "TB_NIVEL"
+    SET 
+    STR_NOMBRE_NIVEL = VarNombreNivel 
+    WHERE STR_ID_NIVEL = VarIdNivel;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarNivel" ('Niv001','Nivel 4');
+select * from tb_nivel;
+
+----------------------------------------
+------------------TB_MATRICULA--------------
+----------------CREAR MATRICULA-------------------
+--INT_INDEX_PERSONA
+--STR_ID_ANIO
+--STR_ID_NIVEL
+--STR_ESTADO
+create or replace procedure "sp_CrearMatricula" (int_index_persona NUMBER,str_id_anio VARCHAR2,str_id_nivel VARCHAR2,
+	str_estado VARCHAR2)
+AS
+Begin
+    INSERT INTO TB_MATRICULA VALUES(int_index_persona,str_id_anio,str_id_nivel,str_estado);
+End;
+/
+exec "sp_CrearMatricula" (2,'A2022','Niv004','Activo');
+
+COLUMN str_estado FORMAT A8
+
+---------ACTUALIZAR------------------
+--INT_INDEX_PERSONA
+--STR_ID_ANIO
+CREATE OR REPLACE PROCEDURE "sp_ActualizarMatricula" (int_index_persona NUMBER,str_id_anio VARCHAR2,VarEstado VARCHAR2)
+AS
+BEGIN
+    UPDATE TB_Matricula
+    SET 
+    STR_Estado = VarEstado 
+    WHERE INT_INDEX_PERSONA = int_index_persona 
+    AND STR_ID_ANIO = str_id_anio;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarMatricula" (2,'A2022','Inactivo');
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+------------------TB_MATERIA--------------------------------------------
+-----------CREAR MATERIA----------------------------------------------
+--STR_ID_MATERIA
+--STR_NOMBRE_MATERIA
+--STR_DESCRIPCION_MATERIA
+--STR_ID_NIVEL
+create or replace procedure "sp_CrearMateria" (str_id_materia in varchar2, str_nombre_materia in varchar2, str_descripcion_materia in varchar2, str_id_nivel in varchar2)
+AS
+Begin
+    INSERT INTO "TB_MATERIA" VALUES(str_id_materia, str_nombre_materia, str_descripcion_materia, str_id_nivel);
+End;
+/
+exec "sp_CrearMateria" ('Mat001','Algebra','Ciencias Exactas','Pru001');
+
+COLUMN str_id_materia FORMAT A20
+COLUMN str_nombre_materia FORMAT A20
+COLUMN str_descripcion_materia FORMAT A10
+COLUMN str_id_nivel FORMAT A10
+--------------------------ACTUALIZAR------
+--STR_ID_MATERIA
+--STR_NOMBRE_MATERIA
+--STR_DESCRIPCION_MATERIA
+--STR_ID_NIVEL
+CREATE OR REPLACE PROCEDURE "sp_ActualizarMateria" (VarIdMateria in varchar2, VarNombreMateria in varchar2, VarDescripcionMateria in varchar2, VarIdNivel in varchar2)
+AS
+BEGIN
+    UPDATE "TB_MATERIA"
+    SET
+    STR_NOMBRE_MATERIA = VarNombreMateria,
+    STR_DESCRIPCION_MATERIA = VarDescripcionMateria,
+    STR_ID_NIVEL = VarIdNivel
+    WHERE STR_ID_MATERIA = VarIdMateria;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarMateria" ('Mat002','Quimica','Ciencias Quimicas','Niv001');
+
+---------------------------------------------------------------------------
+---------TB_ACTIVIDAD--------
+----------CREAR--------------
+--STR_ID_ACTIVIDAD
+--VAR_TEMA_ACTIVIDAD
+--STR_ESTADO_ACTIVIDAD
+--STR_ID_MATERIA
+create or replace procedure "sp_CrearActividad" (str_id_actividad in varchar2, var_tema_actividad in varchar2, str_estado_actividad in varchar2, str_id_materia in varchar2)
+AS
+Begin
+    INSERT INTO "TB_ACTIVIDAD" VALUES(str_id_actividad, var_tema_actividad, str_estado_actividad, str_id_materia);
+End;
+/
+exec "sp_CrearActividad" ('Act001','Deber','Activo','Mat002');
+
+COLUMN str_id_actividad FORMAT A20
+COLUMN var_tema_actividad FORMAT A20
+COLUMN str_estado_actividad FORMAT A10
+COLUMN str_id_materia FORMAT A20
+---------Update-------------
+--STR_ID_ACTIVIDAD
+--VAR_TEMA_ACTIVIDAD
+--STR_ESTADO_ACTIVIDAD
+--STR_ID_MATERIA
+CREATE OR REPLACE PROCEDURE "sp_ActualizarActividad" (VarIdActividad in varchar2, VarTemaActividad in varchar2, VarEstadoAc in varchar2, VarIdMateria in varchar2)
+AS
+BEGIN
+    UPDATE TB_ACTIVIDAD
+    SET 
+    var_tema_actividad = VarTemaActividad, 
+    str_estado_actividad = VarEstadoAc,
+    str_id_materia = VarIdMateria
+    WHERE str_id_actividad = VarIdActividad;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarActividad" ('Act001','Trabajo','Inactivo','Mat002');
+
+-----------------TB_LIBRETA---------------
+----------------CREAR---------------------
+--STR_ID_LIBRETA
+--STR_NOMBRE_LIBRETA
+--STR_ESTADO_LIBRETA
+create or replace procedure "sp_CrearLiberta" (str_id_libreta in varchar2, str_nombre_libreta in varchar2, str_estado_libreta in varchar2)
+AS
+Begin
+    INSERT INTO "TB_LIBRETA" VALUES(str_id_libreta, str_nombre_libreta, str_estado_libreta);
+End;
+/
+exec "sp_CrearLiberta" ('Lib001','Calificaciones','Activo');
+
+COLUMN str_id_libreta FORMAT A20
+COLUMN str_nombre_libreta FORMAT A20
+COLUMN str_estado_libreta FORMAT A10
+-------------Update------
+--STR_ID_LIBRETA
+--STR_NOMBRE_LIBRETA
+--STR_ESTADO_LIBRETA
+CREATE OR REPLACE PROCEDURE "sp_ActualizarLibreta" (VarIdLibreta in varchar2, VarNombreLibreta in varchar2, VarEstadoLibreta in varchar2)
+AS
+BEGIN
+    UPDATE "TB_LIBRETA"
+    SET 
+    str_nombre_libreta = VarNombreLibreta, 
+    str_estado_libreta = VarEstadoLibreta
+    WHERE str_id_libreta = VarIdLibreta;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarLibreta" ('Lib001','Calificaciones','Inactivo');
+
+------------TB_CALIFICACIONES----------
+--STR_ID_MATERIA
+--STR_ID_ACTIVIDAD
+--STR_ID_LIBRETA
+--FLOAT_NOTA
+create or replace procedure "sp_CrearCalificaciones" (str_id_materia in varchar2, str_id_actividad in varchar2, str_id_libreta in varchar2, float_nota in number)
+AS
+Begin
+    INSERT INTO "TB_CALIFICACIONES" VALUES(str_id_materia, str_id_actividad, str_id_libreta, float_nota);
+End;
+/
+exec "sp_CrearCalificaciones" ('Mat002','Act001','Lib001', 18);
+
+COLUMN str_id_materia FORMAT A20
+COLUMN str_id_actividad FORMAT A20
+COLUMN str_id_libreta FORMAT A10
+COLUMN float_nota FORMAT 999
+----------------Update-------------
+--STR_ID_MATERIA
+--STR_ID_ACTIVIDAD
+--STR_ID_LIBRETA
+--FLOAT_NOTA
+CREATE OR REPLACE PROCEDURE "sp_ActualizarCalificaciones" (VarIdMateria in varchar2, VarIdActividad in varchar2, VarIdLibreta in varchar2, FloatNota in number)
+AS
+BEGIN
+    UPDATE "TB_CALIFICACIONES"
+    SET 
+    str_id_actividad = VarIdActividad,
+    str_id_libreta = VarIdLibreta,
+    float_nota = FloatNota
+    WHERE str_id_materia = VarIdMateria;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarCalificaciones" ('Mat002','Act001','Lib001', 15);
+
+
+--------------TB BASE LEGAL------------
+-----------------INSERTAR-----------
+--STR_ID_BASE
+--STR_NOMBRE_BASE
+--STR_ESTADO_BASE
+create or replace procedure "sp_CrearBaseLegal" (str_id_base in varchar2, str_nombre_base in varchar2, str_estado_base in varchar2)
+AS
+Begin
+    INSERT INTO "TB_BASE_LEGAL" VALUES(str_id_base, str_nombre_base, str_estado_base);
+End;
+/
+exec "sp_CrearBaseLegal" ('BL001','Legalidad','Activo');
+
+COLUMN str_id_base FORMAT A20
+COLUMN str_nombre_base FORMAT A20
+COLUMN str_estado_base FORMAT A10
+
+--------TB INSTITUCION
+---------INSERTAR----
+--STR_ID_INSTITUCION
+--STR_NOMBRE_INSTITUCION
+--STR_MODALIDAD_INSTITUCION
+--STR_JORNADA_INSTITUCION
+--STR_ID_BASE
+
+create or replace procedure "sp_CrearInstitucion" (str_id_institucion in varchar2, str_nombre_institucion in varchar2, 
+    str_modalidad_institucion in varchar2, str_jornada_institucion varchar2, str_id_base varchar2)
+AS
+Begin
+    INSERT INTO "TB_INSTITUCION" VALUES(str_id_institucion, str_nombre_institucion, str_modalidad_institucion, str_jornada_institucion, str_id_base);
+End;
+/
+exec "sp_CrearInstitucion" ('Ins001','ESPE','Presencial','Matutina','BL001');
+
+COLUMN str_id_institucion FORMAT A20
+COLUMN str_nombre_institucion FORMAT A20
+COLUMN str_modalidad_institucion FORMAT A10
+COLUMN str_jornada_institucion FORMAT A10
+COLUMN str_id_base FORMAT A10
+------------Update----------------
+CREATE OR REPLACE PROCEDURE "sp_ActualizarInstitucion" (VarIdIns in varchar2, VarNombreIns in varchar2, 
+    VarModalidad in varchar2, VarJornada varchar2, VarIdBase varchar2)
+AS
+BEGIN
+    UPDATE "TB_INSTITUCION"
+    SET 
+    str_nombre_institucion= VarNombreIns,
+    str_modalidad_institucion = VarModalidad,
+    str_jornada_institucion = VarJornada,
+    str_id_base = VarIdBase 
+    WHERE str_id_institucion = VarIdIns;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarInstitucion" ('Ins001','ESPE','Online','Vespertina','BL001');
+--------TB AULA--------------
+-----------INSERTAR------------
+--STR_ID_AULA
+--STR_NOMBRE_AULA
+--STR_ID_INSTITUCION
+create or replace procedure "sp_CrearAula" (str_id_aula in varchar2, str_nombre_aula in varchar2, str_id_institucion varchar2)
+AS
+Begin
+    INSERT INTO "TB_AULA" VALUES(str_id_aula, str_nombre_aula, str_id_institucion);
+End;
+/
+exec "sp_CrearAula" ('Au001','9no A','Ins001');
+
+COLUMN str_id_aula FORMAT A20
+COLUMN str_nombre_aula FORMAT A20
+COLUMN str_id_institucion FORMAT A10
+
+-------UPDATE------------
+--STR_ID_AULA
+--STR_NOMBRE_AULA
+--STR_ID_INSTITUCION
+CREATE OR REPLACE PROCEDURE "sp_ActualizarAula" (VarIdAula in varchar2, VarNombreAula in varchar2, VarIdIns in varchar2)
+AS
+BEGIN
+    UPDATE "TB_AULA"
+    SET 
+    STR_NOMBRE_AULA= VarNombreAula,
+    STR_ID_INSTITUCION = VarIdInsS
+    WHERE STR_ID_AULA = VarIdAula;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarAula" ('Au001','10mo A','Ins001');
+
+--------TB UBICACION--------------
+-----------INSERTAR------------
+--INT_INDEX_PERSONA
+--STR_ID_INSTITUCION
+--STR_ID_AULA
+--STR_ID_MATERIA
+--STR_HORARIO
+create or replace procedure "sp_CrearUbicacion" (int_index_persona NUMBER,str_id_institucion VARCHAR2,
+str_id_aula VARCHAR2,str_id_materia VARCHAR2,str_horario VARCHAR2)
+AS
+Begin
+    INSERT INTO "TB_UBICACION" VALUES(int_index_persona,str_id_institucion,str_id_aula,str_id_materia,str_horario);
+End;
+/
+exec "sp_CrearUbicacion" (1,'Ins001','Au001','Mat001','8:00-10:00 L-M-V');
+
+COLUMN str_horario FORMAT A10
+
+-------UPDATE------------
+--INT_INDEX_PERSONA
+--STR_ID_INSTITUCION
+--STR_ID_AULA
+--STR_ID_MATERIA
+--STR_HORARIO
+CREATE OR REPLACE PROCEDURE "sp_ActualizarUbicacion" (int_index_persona NUMBER,str_id_institucion VARCHAR2,
+str_id_aula VARCHAR2,str_id_materia VARCHAR2,Varhorario VARCHAR2)
+AS
+BEGIN
+    UPDATE "TB_UBICACION"
+    SET 
+    STR_HORARIO=VarHorario
+    WHERE INT_INDEX_PERSONA = int_index_persona AND STR_ID_INSTITUCION = str_id_institucion
+    AND STR_ID_AULA = str_id_aula AND STR_ID_MATERIA = str_id_materia;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarUbicacion" (1,'Ins001','Au001','Mat001','7:00-9:00 L-M-V');
+
+-------DELETE------------
+--INT_INDEX_PERSONA
+--STR_ID_INSTITUCION
+--STR_ID_AULA
+--STR_ID_MATERIA
+CREATE OR REPLACE PROCEDURE "sp_BorrarUbicacion" (int_index_persona NUMBER,str_id_institucion VARCHAR2,
+str_id_aula VARCHAR2,str_id_materia VARCHAR2)
+AS
+BEGIN
+    DELETE FROM TB_UBICACION
+    WHERE INT_INDEX_PERSONA = int_index_persona AND STR_ID_INSTITUCION = str_id_institucion
+    AND STR_ID_AULA = str_id_aula AND STR_ID_MATERIA = str_id_materia;
+END;
+/
+set autoprint on;
+exec "sp_BorrarUbicacion" (1,'Ins001','Au001','Mat001');
+
+--------TB USUARIO--------------
+-----------INSERTAR------------
+--STR_ID_USUARIO
+--STR_NOMBRE_USUARIO
+--STR_PASSWORD_USUARIO
+--INT_INDEX_PERSONA
+create or replace procedure "sp_CrearUsuario" (str_id_usuario VARCHAR2,str_nombre_usuario VARCHAR2,str_password_usuario VARCHAR2,
+	int_index_persona NUMBER)
+AS
+Begin
+    INSERT INTO TB_USUARIO VALUES(str_id_usuario,str_nombre_usuario,str_password_usuario,int_index_persona);
+End;
+/
+exec "sp_CrearUsuario" ('User001','JCaicedo','26092000',1);
+
+Column STR_ID_USUARIO Format A20
+Column STR_NOMBRE_USUARIO Format A20
+Column STR_PASSWORD_USUARIO Format A20
+
+-------UPDATE------------
+--STR_ID_USUARIO
+--STR_NOMBRE_USUARIO
+--STR_PASSWORD_USUARIO
+--INT_INDEX_PERSONA
+CREATE OR REPLACE PROCEDURE "sp_ActualizarUsuario" (str_id_usuario VARCHAR2,VarPasswordUsuario VARCHAR2)
+AS
+BEGIN
+    UPDATE "TB_USUARIO"
+    SET 
+    STR_PASSWORD_USUARIO=VarPasswordUsuario
+    WHERE STR_ID_USUARIO = str_id_usuario;
+END;
+/
+set autoprint on;
+exec "sp_ActualizarUsuario" ('User001','jg260900');
+
+-------DELETE------------
+--INT_INDEX_PERSONA
+--STR_ID_INSTITUCION
+--STR_ID_AULA
+--STR_ID_MATERIA
+CREATE OR REPLACE PROCEDURE "sp_BorrarUsuario" (str_id_usuario VARCHAR2)
+AS
+BEGIN
+    DELETE FROM TB_USUARIO
+    WHERE STR_ID_USUARIO = str_id_usuario;
+END;
+/
+set autoprint on;
+exec "sp_BorrarUsuario" ('User001');
